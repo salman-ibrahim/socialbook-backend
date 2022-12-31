@@ -26,12 +26,11 @@ const app = express();  // Initialize express app
 app.use(express.json());    // Parse JSON bodies
 app.use(helmet());  // Set security HTTP headers
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" })); // Set cross-origin resource policy
-// app.use(helmet.crossOriginEmbedderPolicy({ policy: "require-corp" })); // Set cross-origin embedder policy
-// app.use(helmet({ crossOriginResourcePolicy: false })); // Set cross-origin resource policy
 app.use(morgan("common"));  // Log HTTP requests
 app.use(bodyParser.json({ limit: "30mb", extended: true }));  // Parse JSON bodies
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));  // Parse URL-encoded bodies
 // app.use(cors());    // Enable CORS
+app.use(cors({ origin: "https://socialbook-client.netlify.app"})); // Enable CORS
 app.use('/assets', express.static(path.join(__dirname, 'public/assets'))); // Set the directory for static assets
 
 /* FILE STORAGE */
