@@ -30,7 +30,7 @@ app.use(helmet.referrerPolicy({ policy: "cross-origin" })); // Set referrer poli
 app.use(morgan("common"));  // Log HTTP requests
 app.use(bodyParser.json({ limit: "30mb", extended: true }));  // Parse JSON bodies
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));  // Parse URL-encoded bodies
-app.use(cors());    // Enable CORS
+app.use(cors({ origin: "https://socialbook-client.netlify.app", credentials: true}));    // Enable CORS
 // app.use(cors({ origin: "https://socialbook-client.netlify.app"})); // Enable CORS
 app.use('/assets', express.static(path.join(__dirname, 'public/assets'))); // Set the directory for static assets
 
