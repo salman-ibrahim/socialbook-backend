@@ -24,7 +24,7 @@ const __dirname = path.dirname(__filename); // Get current directory
 dotenv.config();    // Load environment variables from .env file
 const app = express();  // Initialize express app
 app.use(express.json());    // Parse JSON bodies
-app.use(helmet());  // Set security HTTP headers
+// app.use(helmet());  // Set security HTTP headers
 // app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" })); // Set cross-origin resource policy
 // app.use(helmet.referrerPolicy({ policy: "cross-origin" })); // Set referrer policy
 app.use(morgan("common"));  // Log HTTP requests
