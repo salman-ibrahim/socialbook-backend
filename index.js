@@ -63,10 +63,9 @@ mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(() => {
-    app.listen();
-    // app.listen(PORT, () => {console.log(`Server running on port: ${PORT}`)});
+    app.listen(PORT, () => {console.log(`Server running on port: ${PORT}`)});
 
-    /* ADD THE DATE ONE TIME*/
+    /* ADD THE DATA ONE TIME*/
     // User.insertMany(users); // Insert users
     // Post.insertMany(posts); // Insert posts
 }).catch((error) => console.log(`Connection error: ${error.message}`));

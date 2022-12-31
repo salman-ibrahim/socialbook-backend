@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "socialbook-api",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
