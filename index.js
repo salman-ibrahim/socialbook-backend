@@ -7,6 +7,7 @@ import multer from "multer";
 import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
+// import serverless from "serverless-http";
 import { fileURLToPath } from "url";
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/users.js";
@@ -22,7 +23,9 @@ import { verifyToken } from "./middleware/auth.js";
 const __filename = fileURLToPath(import.meta.url);  // Get current file name
 const __dirname = path.dirname(__filename); // Get current directory
 dotenv.config();    // Load environment variables from .env file
+const serverless = require('serverless-http'); // Import serverless-http
 const app = express();  // Initialize express app
+
 app.use(express.json());    // Parse JSON bodies
 app.use(helmet());  // Set security HTTP headers
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" })); // Set cross-origin resource policy
@@ -51,9 +54,9 @@ const upload = multer({ storage });
 app.post("/auth/register", upload.single("picture"), register); // Register user with image
 app.post("/posts", verifyToken, upload.single("picture"), createPost); // Create post with image
 /* ROUTES WITHOUT FILES */
-app.use("/auth", authRoutes);   // Auth routes
-app.use("/users", userRoutes);  // User routes
-app.use("/posts", postRoutes);  // Post routes
+app.use("/.netlify/functions/api/auth", authRoutes);   // Auth routes
+app.use("/.netlify/functions/api/users", userRoutes);  // User routes
+app.use("/.netlify/functions/api/posts", postRoutes);  // Post routes
 
 /* MOMGOOSE CONNECTION */
 const PORT = process.env.PORT || 6001;
@@ -69,3 +72,5 @@ mongoose.connect(process.env.MONGO_URL, {
     // User.insertMany(users); // Insert users
     // Post.insertMany(posts); // Insert posts
 }).catch((error) => console.log(`Connection error: ${error.message}`));
+
+module.exports.handler = serverless(app); // Export handler for serverless
