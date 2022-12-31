@@ -24,13 +24,13 @@ const __dirname = path.dirname(__filename); // Get current directory
 dotenv.config();    // Load environment variables from .env file
 const app = express();  // Initialize express app
 app.use(express.json());    // Parse JSON bodies
-// app.use(helmet());  // Set security HTTP headers
-// app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" })); // Set cross-origin resource policy
-// app.use(helmet.referrerPolicy({ policy: "cross-origin" })); // Set referrer policy
+app.use(helmet());  // Set security HTTP headers
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" })); // Set cross-origin resource policy
 app.use(morgan("common"));  // Log HTTP requests
 app.use(bodyParser.json({ limit: "30mb", extended: true }));  // Parse JSON bodies
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));  // Parse URL-encoded bodies
-app.use(cors({ origin: '*'}));    // Enable CORS
+app.use(cors());    // Enable CORS
+
 app.use('/assets', express.static(path.join(__dirname, 'public/assets'))); // Set the directory for static assets
 
 /* FILE STORAGE */
@@ -63,7 +63,8 @@ mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(() => {
-    app.listen(PORT, () => {console.log(`Server running on port: ${PORT}`)});
+    app.listen();
+    // app.listen(PORT, () => {console.log(`Server running on port: ${PORT}`)});
 
     /* ADD THE DATE ONE TIME*/
     // User.insertMany(users); // Insert users
